@@ -1,6 +1,8 @@
 from tkinter import *
 from tkinter  import ttk
 from ttkthemes import *
+import threading 
+from Number import Number
 
 class Count:
     def __init__(self):
@@ -21,17 +23,20 @@ class Count:
         nameLabel = Label(countFrame, text="Contador", font="Gadugi 10", background="#ffffff")
         nameLabel.pack(pady=30)
 
-        self.numberLabel = Label(countFrame, text="0", font="Gadugi 40", background="#ffffff")
-        self.numberLabel.pack()
+        numberLabel = Label(countFrame, text=Number.getRegister(self), font="Gadugi 40", background="#ffffff")
+        numberLabel.pack()
 
         buttonFrame = Frame(window, background="#ffffff" )
         buttonFrame.pack(pady=55)
 
-        buttonAdd = Button(buttonFrame, text="Adicionar",bd=0, width=18, height=2, background="#0E5369", fg="#ffffff")
+        buttonAdd = Button(buttonFrame, command=lambda: threading.Thread(target=Number().add(numberLabel)).start(), text="Adicionar",bd=0, width=10, height=2, background="#0E5369", fg="#ffffff")
         buttonAdd.pack(side="left",padx=2)
 
-        buttonRemove = Button(buttonFrame, text="Remover", bd=0, width=18, height=2, background="#CC5354", fg="#ffffff")
+        buttonRemove = Button(buttonFrame, command=lambda: threading.Thread(target=Number().remove(numberLabel)).start(), text="Remover", bd=0, width=10, height=2, background="#CC5354", fg="#ffffff")
         buttonRemove.pack(side="left",padx=2)
+        
+        buttonZerar = Button(buttonFrame, command=lambda: threading.Thread(target=Number().returnDefault(numberLabel)).start() , text="Redefinir", bd=0, width=10, height=2, fg="black")
+        buttonZerar.pack(side="left",padx=2)
 
         developerFrame = Frame(window, background="#ffffff")
         developerFrame.pack(fill="x")
